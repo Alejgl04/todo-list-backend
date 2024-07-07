@@ -1,6 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore/lite';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  setDoc,
+} from 'firebase/firestore/lite';
 import { firebaseDb } from '../config';
 
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -10,16 +16,26 @@ import { TodoStatus } from './enum/todos.status';
 @Injectable()
 export class TodosService {
   async create(createTodoDto: CreateTodoDto) {
-    const newTodo = {
-      ...createTodoDto,
-      status: TodoStatus.PENDING,
-      date: new Date().getTime(),
-    };
+    try {
+      const newTodo = {
+        ...createTodoDto,
+        status: TodoStatus.PENDING,
+        date: new Date().getTime(),
+      };
 
-    const userId = 'Abcasd12';
-    const newDoc = doc(collection(firebaseDb, `${userId}/backend-todos/todos`));
+      const userId = 'Abcasd12';
+      const newDoc = doc(
+        collection(firebaseDb, `${userId}/backend-todos/todos`),
+      );
 
-    await setDoc(newDoc, newTodo);
+      await setDoc(newDoc, newTodo);
+      return {
+        completed: true,
+        newTodo,
+      };
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
   async findAll() {
@@ -38,15 +54,35 @@ export class TodosService {
     return todos;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} todo`;
+  async update(id: string, updateTodoDto: UpdateTodoDto) {
+    try {
+      const userId = 'Abcasd12';
+      const docRef = doc(firebaseDb, `${userId}/backend-todos/todos/${id}`);
+      await setDoc(docRef, updateTodoDto, { merge: true });
+      return {
+        completed: true,
+        newTodo: updateTodoDto,
+      };
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  update(id: number, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  async remove(id: string) {
+    try {
+      const userId = 'Abcasd12';
+
+      const removeTodo = doc(firebaseDb, `${userId}/backend-todos/todos/${id}`);
+      await deleteDoc(removeTodo);
+      return {
+        completed: true,
+      };
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} todo`;
+  private handleExceptions(error: any) {
+    throw new InternalServerErrorException(error);
   }
 }
