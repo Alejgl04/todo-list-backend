@@ -55,9 +55,9 @@ export class TodosService {
     return todos;
   }
 
-  async update(id: string, updateTodoDto: UpdateTodoDto) {
+  async update(id: string, updateTodoDto: UpdateTodoDto, user: User) {
     try {
-      const userId = 'Abcasd12';
+      const userId = user._id;
       const docRef = doc(firebaseDb, `${userId}/backend-todos/todos/${id}`);
       await setDoc(docRef, updateTodoDto, { merge: true });
       return {
@@ -69,9 +69,9 @@ export class TodosService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string, user: User) {
     try {
-      const userId = 'Abcasd12';
+      const userId = user._id;
 
       const removeTodo = doc(firebaseDb, `${userId}/backend-todos/todos/${id}`);
       await deleteDoc(removeTodo);

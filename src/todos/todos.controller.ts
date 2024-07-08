@@ -32,12 +32,16 @@ export class TodosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.todosService.update(id, updateTodoDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateTodoDto: UpdateTodoDto,
+    @GetUser() user: User,
+  ) {
+    return this.todosService.update(id, updateTodoDto, user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.todosService.remove(id);
+  remove(@Param('id') id: string, @GetUser() user: User) {
+    return this.todosService.remove(id, user);
   }
 }
