@@ -10,6 +10,8 @@ interface EnvironmentVars {
   MESSAGINGSENDERID: string;
   APPID: string;
   MEASUREMENTID: string;
+  MONGODB: string;
+  JWT_SEED: string;
 }
 
 const envsSchema = joi
@@ -22,6 +24,8 @@ const envsSchema = joi
     MESSAGINGSENDERID: joi.string().required(),
     APPID: joi.string().required(),
     MEASUREMENTID: joi.string().required(),
+    MONGODB: joi.string().required(),
+    JWT_SEED: joi.string().required(),
   })
   .unknown(true);
 
@@ -42,4 +46,6 @@ export const envs = {
   messagingSenderid: envsVariable.MESSAGINGSENDERID,
   appId: envsVariable.APPID,
   measureMentid: envsVariable.MEASUREMENTID,
+  mongoDb: envsVariable.MONGODB,
+  jwtSeed: envsVariable.JWT_SEED,
 };
