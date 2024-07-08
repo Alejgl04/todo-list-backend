@@ -12,10 +12,11 @@ import { firebaseDb } from '../config';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { TodoStatus } from './enum/todos.status';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class TodosService {
-  async create(createTodoDto: CreateTodoDto) {
+  async create(createTodoDto: CreateTodoDto, user: User) {
     try {
       const newTodo = {
         ...createTodoDto,
@@ -23,7 +24,7 @@ export class TodosService {
         date: new Date().getTime(),
       };
 
-      const userId = 'Abcasd12';
+      const userId = user._id;
       const newDoc = doc(
         collection(firebaseDb, `${userId}/backend-todos/todos`),
       );
@@ -38,8 +39,8 @@ export class TodosService {
     }
   }
 
-  async findAll() {
-    const userId = 'Abcasd12';
+  async findAll(user: User) {
+    const userId = user._id;
     const todos = [];
     const collectionRef = collection(
       firebaseDb,
