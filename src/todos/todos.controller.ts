@@ -32,15 +32,18 @@ export class TodosController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
   update(
     @Param('id') id: string,
     @Body() updateTodoDto: UpdateTodoDto,
     @GetUser() user: User,
   ) {
+    console.log('qdasdasdasd');
     return this.todosService.update(id, updateTodoDto, user);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string, @GetUser() user: User) {
     return this.todosService.remove(id, user);
   }

@@ -54,7 +54,7 @@ export class AuthService {
     return user;
   }
 
-  private generateJWT(payload: JwtPayload) {
+  generateJWT(payload: JwtPayload) {
     const token = this.jwtService.sign(payload);
     return token;
   }
