@@ -31,6 +31,12 @@ export class TodosController {
     return this.todosService.findAll(user);
   }
 
+  @Get(':id')
+  @UseGuards(AuthGuard())
+  findOne(@Param('id') id: string, @GetUser() user: User) {
+    return this.todosService.findOne(id, user);
+  }
+
   @Patch(':id')
   @UseGuards(AuthGuard())
   update(
@@ -38,7 +44,6 @@ export class TodosController {
     @Body() updateTodoDto: UpdateTodoDto,
     @GetUser() user: User,
   ) {
-    console.log('qdasdasdasd');
     return this.todosService.update(id, updateTodoDto, user);
   }
 

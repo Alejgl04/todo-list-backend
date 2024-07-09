@@ -4,6 +4,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   setDoc,
 } from 'firebase/firestore/lite';
@@ -53,6 +54,17 @@ export class TodosService {
     });
 
     return todos;
+  }
+
+  async findOne(id: string, user: User) {
+    const userId = user._id;
+    const docRef = doc(firebaseDb, `${userId}/backend-todos/todos/${id}`);
+    const documentId = await getDoc(docRef);
+
+    return {
+      todos: documentId.data(),
+      id,
+    };
   }
 
   async update(id: string, updateTodoDto: UpdateTodoDto, user: User) {
