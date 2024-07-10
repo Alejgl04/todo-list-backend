@@ -10,3 +10,8 @@
 4. Execute npm run start:dev
 5. src/config is place the firebase file
 6. npm run test 
+
+
+## Important
+
+I use nest js as a js framework node, as it is strongly typed strictly making it much easier to read the code. Also use the JWT strategy for authentication and authorization of the user connected with moongose ( mongo atlas ) in the cloud 
