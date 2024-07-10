@@ -12,7 +12,9 @@ import { ConfigModule } from '@nestjs/config';
     }),
     TodosModule,
     AuthModule,
-    MongooseModule.forRoot(process.env.MONGODB),
+    MongooseModule.forRoot(
+      'mongodb+srv://mgt:aCtuLONpkja40eTZ@cluster0.rq21i.mongodb.net/task',
+    ),
   ],
   controllers: [],
   providers: [],
