@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { TodosModule } from './todos/todos.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -12,9 +12,13 @@ import { ConfigModule } from '@nestjs/config';
     }),
     TodosModule,
     AuthModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://mgt:aCtuLONpkja40eTZ@cluster0.rq21i.mongodb.net/task',
-    ),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB'), // Loaded from .ENV
+      }),
+    }),
   ],
   controllers: [],
   providers: [],

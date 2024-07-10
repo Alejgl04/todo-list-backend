@@ -8,11 +8,13 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([
       {
         name: User.name,
