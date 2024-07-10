@@ -14,4 +14,4 @@
 
 ## Important
 
-I use nest js as a js framework node, as it is strongly typed strictly making it much easier to read the code. Also use the JWT strategy for authentication and authorization of the user connected with moongose ( mongo atlas ) in the cloud 
+I use nest js as a js framework node, as it is strongly typed strictly making it much easier to read the code. Also use the JWT strategy for authentication and authorization of the user connected with moongose ( mongo atlas ) in the cloud.
