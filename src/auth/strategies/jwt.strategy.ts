@@ -6,7 +6,6 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { User } from '../entities/user.entity';
 import { Model } from 'mongoose';
-import { envs } from 'src/config';
 import { JwtPayload } from '../interfaces/jwt.payload.interface';
 
 @Injectable()
@@ -16,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private userModel: Model<User>,
   ) {
     super({
-      secretOrKey: envs.jwtSeed,
+      secretOrKey: process.env.JWTSEED,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     });
   }

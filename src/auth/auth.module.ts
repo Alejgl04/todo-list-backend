@@ -7,7 +7,6 @@ import { User, UserSchema } from './entities/user.entity';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
-import { envs } from '../config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
@@ -24,7 +23,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     JwtModule.registerAsync({
       useFactory: () => {
         return {
-          secret: envs.jwtSeed,
+          secret: process.env.JWT_SEED,
           signOptions: {
             expiresIn: '1h',
           },
